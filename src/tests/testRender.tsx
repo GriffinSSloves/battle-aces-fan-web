@@ -19,7 +19,7 @@ export const testRender = (ui: ReactElement, options: TestRenderOptions = {}) =>
         }
     ]
 
-    return testRenderWithAppRoutes(ui, { initialRoute: '/test', routes: testRoutes, renderOptions })
+    return testRenderWithAppRoutes({ initialRoute: '/test', routes: testRoutes, renderOptions })
 }
 
 type TestRenderWithAppRoutesOptions = {
@@ -28,7 +28,7 @@ type TestRenderWithAppRoutesOptions = {
     renderOptions?: RenderOptions
 }
 
-export const testRenderWithAppRoutes = (ui: ReactElement, options: TestRenderWithAppRoutesOptions = {}) => {
+export const testRenderWithAppRoutes = (options: TestRenderWithAppRoutesOptions = {}) => {
     const { initialRoute = '/', routes = appRoutes, renderOptions = {} } = options
 
     const router = createMemoryRouter(routes, {
