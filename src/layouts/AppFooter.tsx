@@ -1,7 +1,7 @@
 export const AppFooter = () => {
     return (
         <footer>
-            <p>App Footer</p>
+            <p>BattleAcesFans.gg isn't associated with Uncapped games.</p>
         </footer>
     )
 }

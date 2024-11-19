@@ -1,7 +1,7 @@
 export const AppHeader = () => {
     return (
         <header>
-            <h1>App Header</h1>
+            <h2>Battle Aces Unit Rating</h2>
         </header>
     )
 }

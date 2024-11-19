@@ -1,9 +1,7 @@
 import { ComponentType } from 'react'
 import { FallbackProps } from 'react-error-boundary'
 
-export const GErrorBoundary: ComponentType<FallbackProps> = ({ error, resetErrorBoundary }) => {
-    // TODO: add pic of me confused
-
+export const AceErrorFallback: ComponentType<FallbackProps> = ({ error, resetErrorBoundary }) => {
     const logError = () => {
         console.log('Error logged', error)
     }
