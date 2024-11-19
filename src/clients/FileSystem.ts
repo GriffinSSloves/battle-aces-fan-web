@@ -14,6 +14,8 @@ interface FileSystemDB extends DBSchema {
     }
 }
 
+// TODO: Need to test this
+
 export interface IFileSystem {
     readFile: (path: string) => Promise<string>
     writeFile: (path: string, content: string) => Promise<string>
@@ -21,7 +23,7 @@ export interface IFileSystem {
     deleteFile: (path: string) => Promise<void>
 }
 
-export class FileSystem implements IFileSystem {
+export class IDBFileSystem implements IFileSystem {
     private dbName = 'FileSystemDB'
     private version = 1
 

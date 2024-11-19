@@ -8,7 +8,7 @@ export type QuestionKind = z.infer<typeof QuestionKind>
 
 export const HAPPY_TAG_KINDS = ['Fun', 'Looks good', 'Feels good', 'Well designed'] as const
 export const SAD_TAG_KINDS = ['Frustrating', 'Buggy', 'Confusing', 'Looks bad', 'Overpowered', 'Underpowered'] as const
-export const OTHER_TAG_KINDS = ['Other'] as const
+export const OTHER_TAG_KINDS = ['Other', 'Have not used the unit'] as const
 
 export const TAG_KINDS = [...HAPPY_TAG_KINDS, ...SAD_TAG_KINDS, ...OTHER_TAG_KINDS] as const
 
@@ -31,14 +31,8 @@ export type UnitMatchupQuestionDetails = z.infer<typeof UnitMatchupQuestionDetai
 export const QuestionDetails = z.discriminatedUnion('kind', [UnitSingleQuestionDetails, UnitMatchupQuestionDetails])
 export type QuestionDetails = z.infer<typeof QuestionDetails>
 
-export const QuestionAnswer = z.object({
-    rating: z.number(),
-    tags: z.array(QuestionTagKind)
-})
-export type QuestionAnswer = z.infer<typeof QuestionAnswer>
-
 export const Question = z.object({
     kind: QuestionKind,
-    details: QuestionDetails,
-    answer: QuestionAnswer.nullable()
+    details: QuestionDetails
 })
+export type Question = z.infer<typeof Question>

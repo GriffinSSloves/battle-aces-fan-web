@@ -2,17 +2,16 @@ import { RouterProvider } from 'react-router-dom'
 import './App.css'
 import './index.css'
 import { AppRouter } from './lib/router'
-import { useEffect } from 'react'
+import { ResourceContextProvider } from './lib/ResourceContextProvider'
+import { ResourceProvider } from './lib/resourceProvider'
 
 function App() {
-    useEffect(() => {
-        // Load session data from local storage / cookies
-    }, [])
+    const resourceProvider = ResourceProvider.create()
 
     return (
-        <div>
-            <RouterProvider router={AppRouter} future={{ v7_startTransition: true }} />
-        </div>
+        <ResourceContextProvider resourceProvider={resourceProvider}>
+            <AppRouter />
+        </ResourceContextProvider>
     )
 }
 

@@ -7,10 +7,9 @@ export interface ISessionDataClient {
 
 // TODO: Implement
 export class SessionDataFileClient implements ISessionDataClient {
-    constructor(
-        private readonly filePath: string,
-        private readonly fileSystem: IFileSystem
-    ) {}
+    filepath: string = 'session.json'
+
+    constructor(private readonly fileSystem: IFileSystem) {}
 
     async getOrCreate(): Promise<SessionData> {
         return {
