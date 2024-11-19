@@ -1,19 +1,5 @@
 # What's this?
 
-This is a template for a modern website written in Typescript and React
+This is a Battle Aces Fan Site in which you rate units and unit matchups
 
-Features / Tech used
-
--   TailwindCSS
--   ShadCN base components
--   React Router Dom
--   Pnpm for package management
--   Prettier
--   EsLint
--   Vitest for testing
-
-# Instructions
-
-`pnpm install`
-`pnpm build` - You only need to do this once
-`pnpm dev`
+Created by [@Avsphere](https://github.com/Avsphere) and myself
