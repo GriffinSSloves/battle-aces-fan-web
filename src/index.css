@@ -7,6 +7,8 @@ Background color - Black
 Base color - White
 Uses HSL color format, (Hue, Saturation, Lightness)
 */
+
+/* battle aces orange, not sure how to put this in - linear-gradient(180deg, #d3742d, #5e2720);*/
 @layer base {
     :root {
         --background: 0 0% 100%;
@@ -196,4 +198,8 @@ Uses HSL color format, (Hue, Saturation, Lightness)
     .prose :where(a:hover) {
         @apply text-muted-foreground;
     }
+}
+
+.battle-aces-orange {
+    background: linear-gradient(180deg, #d3742d, #5e2720);
 }

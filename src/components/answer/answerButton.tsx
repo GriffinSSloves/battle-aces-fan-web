@@ -3,24 +3,6 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 // Map moods to colors
-export const getMoodStylesDisabled = (rating: number) => {
-    switch (rating) {
-        case 1: // Angry - red
-            return 'bg-red-500 hover:bg-red-600 text-white'
-        case 2: // Frown - orange
-            return 'bg-orange-500 hover:bg-orange-600 text-white'
-        case 3: // Meh - yellow
-            return 'bg-yellow-500 hover:bg-yellow-600 text-white'
-        case 4: // Smile - green
-            return 'bg-lime-500 hover:bg-lime-600 text-white'
-        case 5: // Laugh - emerald
-            return 'bg-emerald-800 hover:bg-emerald-900 text-white'
-        default:
-            return ''
-    }
-}
-
-// Map moods to colors
 export const getMoodStyles = (rating: number) => {
     switch (rating) {
         case 1: // Angry - red
@@ -76,6 +58,8 @@ export const AnswerButton = ({ rating, currentValue, onChange }: AnswerButtonPro
 
         return getMoodStyles(rating)
     }
+
+    // TODO: Why does clicking one of these submit the form?
 
     return (
         <Button

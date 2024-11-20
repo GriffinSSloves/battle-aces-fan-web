@@ -1,14 +1,11 @@
-import { HAPPY_TAG_KINDS, OTHER_TAG_KINDS, QuestionTagKind, SAD_TAG_KINDS } from '@/datacontracts/Question'
-import { Angry, Frown, FrownIcon, Laugh, LaughIcon, Meh, MehIcon, Smile, SmileIcon } from 'lucide-react'
-import { FC, ReactElement } from 'react'
+import { HAPPY_TAG_KINDS, QuestionTagKind, SAD_TAG_KINDS } from '@/datacontracts/Question'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ControllerRenderProps, useForm } from 'react-hook-form'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { useForm } from 'react-hook-form'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import { z } from 'zod'
 import { AnswerButton } from './answerButton'
-import { AnswerTag, TagMood } from './answerTag'
+import { AnswerTag } from './answerTag'
 
 type AnswerUnitSingleProps = {
     tags: QuestionTagKind[]
@@ -34,11 +31,10 @@ export const AnswerForm = ({ tags, onNext }: AnswerUnitSingleProps) => {
 
     const handleSubmit = (values: FormSchema) => {
         console.log('submit', values)
-    }
 
-    const handleNext = () => {
-        form.reset()
-        onNext()
+        // TODO: Reenable after fixing the button bug
+        // form.reset()
+        // onNext()
     }
 
     return (
@@ -93,15 +89,9 @@ export const AnswerForm = ({ tags, onNext }: AnswerUnitSingleProps) => {
                     )}
                 />
 
-                <div className='flex justify-center gap-8 mt-8'>
-                    <Button onClick={handleNext} size='lg' className='w-64 h-16 font-semibold' variant={'secondary'}>
-                        I haven't used this unit
-                    </Button>
-
-                    <Button size='lg' type='submit' className='w-64 h-16 font-semibold'>
-                        Submit
-                    </Button>
-                </div>
+                <Button size='lg' type='submit' className='w-64 h-16 font-semibold battle-aces-orange mt-8'>
+                    Submit
+                </Button>
             </form>
         </Form>
     )
