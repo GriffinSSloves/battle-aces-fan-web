@@ -7,14 +7,14 @@ export const QuestionUnitMatchup = ({ _details }: QuestionProps) => {
 
     return (
         <div className='flex flex-col'>
-            <h2 className='mb-4'>Matchup between</h2>
-            <div className='flex'>
+            <h1>Rate this matchup!</h1>
+            <div className='flex items-center'>
                 <>
                     {details.friendlyUnits.map((unit) => (
                         <UnitDisplay key={unit.name} unit={unit} />
                     ))}
                 </>
-                <p className='h5Style'>vs.</p>
+                <p className='h3Style'>vs.</p>
                 <>
                     {details.enemyUnits.map((unit) => (
                         <UnitDisplay key={unit.name} unit={unit} />

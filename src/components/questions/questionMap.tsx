@@ -1,5 +1,6 @@
 import { QuestionDetails, QuestionKind } from '@/datacontracts/Question'
-import { QuestionUnitSingle, QuestionUnitMatchup } from './questionUnitSingle'
+import { QuestionUnitSingle } from './questionUnitSingle'
+import { QuestionUnitMatchup } from './questionUnitMatchup'
 
 export interface QuestionProps {
     _details: QuestionDetails

@@ -39,7 +39,7 @@ export const HomePage = () => {
 
     return (
         <div className='h-full'>
-            <h1 className='text-center mb-8'>Rate these units!</h1>
+            <h1 className='text-center mb-8'>Rate these units and matchups!</h1>
             <Suspense
                 fallback={
                     <div className='mt-8'>

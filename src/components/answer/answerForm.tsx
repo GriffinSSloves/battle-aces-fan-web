@@ -12,6 +12,7 @@ import { AnswerTag, TagMood } from './answerTag'
 
 type AnswerUnitSingleProps = {
     tags: QuestionTagKind[]
+    onNext: () => void
 }
 
 const FormSchema = z.object({
@@ -20,9 +21,9 @@ const FormSchema = z.object({
 })
 type FormSchema = z.infer<typeof FormSchema>
 
-const ratingOptions = [1, 2, 3, 4, 5]
+const ratingOptions = [5, 4, 3, 2, 1]
 
-export const AnswerForm = ({ tags }: AnswerUnitSingleProps) => {
+export const AnswerForm = ({ tags, onNext }: AnswerUnitSingleProps) => {
     const form = useForm<FormSchema>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -35,9 +36,14 @@ export const AnswerForm = ({ tags }: AnswerUnitSingleProps) => {
         console.log('submit', values)
     }
 
+    const handleNext = () => {
+        form.reset()
+        onNext()
+    }
+
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSubmit)} className='space-y-6'>
+            <form onSubmit={form.handleSubmit(handleSubmit)} className='mt-4'>
                 <FormField
                     control={form.control}
                     name='rating'
@@ -62,14 +68,14 @@ export const AnswerForm = ({ tags }: AnswerUnitSingleProps) => {
                     render={({ field }) => (
                         <FormItem>
                             <FormControl>
-                                <div className='flex flex-col items-center gap-4'>
+                                <div className='flex flex-col items-center gap-4 mt-4'>
                                     <div className='flex gap-2'>
                                         {HAPPY_TAG_KINDS.map((tag) => (
                                             <AnswerTag key={tag} tag={tag} currentValue={field.value} mood={'happy'} onChange={field.onChange} />
                                         ))}
                                     </div>
 
-                                    <div className='flex gap-2'>
+                                    {/* <div className='flex gap-2'>
                                         {OTHER_TAG_KINDS.map((tag) => (
                                             <AnswerTag key={tag} tag={tag} currentValue={field.value} mood={'neutral'} onChange={field.onChange} />
                                         ))}
@@ -79,7 +85,7 @@ export const AnswerForm = ({ tags }: AnswerUnitSingleProps) => {
                                         {SAD_TAG_KINDS.map((tag) => (
                                             <AnswerTag key={tag} tag={tag} currentValue={field.value} mood={'angry'} onChange={field.onChange} />
                                         ))}
-                                    </div>
+                                    </div> */}
                                 </div>
                             </FormControl>
                             <FormMessage />
@@ -87,7 +93,15 @@ export const AnswerForm = ({ tags }: AnswerUnitSingleProps) => {
                     )}
                 />
 
-                <Button type='submit'>Submit</Button>
+                <div className='flex justify-center gap-8 mt-8'>
+                    <Button onClick={handleNext} size='lg' className='w-64 h-16 font-semibold' variant={'secondary'}>
+                        I haven't used this unit
+                    </Button>
+
+                    <Button size='lg' type='submit' className='w-64 h-16 font-semibold'>
+                        Submit
+                    </Button>
+                </div>
             </form>
         </Form>
     )
