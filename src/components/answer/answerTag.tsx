@@ -1,13 +1,14 @@
 import { cn } from '@/lib/utils'
 import { Button } from '../ui/button'
+import { QuestionTagKind } from '@/datacontracts/Question'
 
 export type TagMood = 'happy' | 'angry' | 'neutral'
 
 interface AnswerTagProps {
-    tag: string
-    currentValue: string[]
+    tag: QuestionTagKind
+    currentValue: QuestionTagKind[]
     mood: TagMood
-    onChange: (value: string[]) => void
+    onChange: (value: QuestionTagKind[]) => void
 }
 
 export const AnswerTag = ({ tag, currentValue, mood, onChange }: AnswerTagProps) => {
@@ -20,20 +21,20 @@ export const AnswerTag = ({ tag, currentValue, mood, onChange }: AnswerTagProps)
 
     const enabled = currentValue.includes(tag)
 
-    const baseStyles = 'px-3 py-1 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer border'
+    const baseStyles = 'px-3 py-1 rounded-full  text-xs md:text-sm font-medium transition-all duration-200 cursor-pointer border'
 
     const typeStyles: Record<TagMood, { default: string; selected: string }> = {
         happy: {
             default: 'border-green-600 text-green-400 hover:bg-green-950',
-            selected: 'border-green-400 bg-green-900 text-green-100'
+            selected: 'border-green-400 bg-green-900 text-green-100 hover:bg-green-950'
         },
         angry: {
             default: 'border-red-600 text-red-400 hover:bg-red-950',
-            selected: 'border-red-400 bg-red-900 text-red-100'
+            selected: 'border-red-400 bg-red-900 text-red-100 hover:bg-red-950'
         },
         neutral: {
-            default: 'border-gray-600 text-gray-400 hover:bg-gray-800',
-            selected: 'border-gray-400 bg-gray-700 text-gray-100'
+            default: 'border-yellow-600 text-yellow-400 hover:bg-yellow-800',
+            selected: 'border-yellow-400 bg-yellow-700 text-yellow-100 hover:bg-yellow-800'
         }
     }
 

@@ -51,8 +51,7 @@ export const createAppRoutes = (context: RouteContext) => {
                 {
                     index: true,
                     element: <HomePage />,
-                    loader: (args) => homeLoader(args, context),
-                    errorElement: <ErrorPage />
+                    loader: (args) => homeLoader(args, context)
                 }
             ],
             errorElement: <ErrorPage />,

@@ -1,18 +1,13 @@
-import { Outlet, useNavigation } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import { AppFooter } from './AppFooter'
 import { AppHeader } from './AppHeader'
-import { LoadingSpinner } from '@/components/common/LoadingSpinner'
-import { Suspense } from 'react'
 
-// TODO: The min height is the height of the screen instead of the height of the content
 export const AppLayout = () => {
     return (
-        <div className='min-h-screen  flex flex-col'>
+        <div className='h-screen md:h-auto md:min-h-screen w-full flex flex-col bg-[url("/images/bg/bg_grid.png")] bg-[length:800px] overflow-x-hidden'>
             <AppHeader />
-            <main className='flex-grow'>
-                <div className='container mx-auto max-w-6xl px-4 py-8'>
-                    <Outlet />
-                </div>
+            <main className='flex-grow w-full container mx-auto max-w-6xl px-4 py-8 flex flex-col'>
+                <Outlet />
             </main>
             <AppFooter />
         </div>

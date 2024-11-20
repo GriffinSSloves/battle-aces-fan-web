@@ -63,9 +63,15 @@ export const AnswerButton = ({ rating, currentValue, onChange }: AnswerButtonPro
 
     return (
         <Button
+            type='button'
             onClick={() => onChange(rating)}
             variant={enabled ? 'default' : 'outline'}
-            className={cn('h-20 w-20 p-2 transition-all duration-200', 'hover:bg-gray-600', 'bg-gray-500', getMoodStylesForButton(rating, enabled))}>
+            className={cn(
+                'h-14 w-14 md:h-20 md:w-20 p-2 transition-all duration-200',
+                'hover:bg-gray-600',
+                'bg-gray-500',
+                getMoodStylesForButton(rating, enabled)
+            )}>
             {getIcon()}
         </Button>
     )

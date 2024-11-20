@@ -8,7 +8,7 @@ export type QuestionKind = z.infer<typeof QuestionKind>
 
 export const HAPPY_TAG_KINDS = ['Fun', 'Looks good', 'Feels good', 'Well designed'] as const
 export const SAD_TAG_KINDS = ['Frustrating', 'Buggy', 'Confusing', 'Looks bad', 'Overpowered', 'Underpowered'] as const
-export const OTHER_TAG_KINDS = ['Other', 'Have not used the unit'] as const
+export const OTHER_TAG_KINDS = ['Have not used the unit'] as const
 
 export const TAG_KINDS = [...HAPPY_TAG_KINDS, ...SAD_TAG_KINDS, ...OTHER_TAG_KINDS] as const
 

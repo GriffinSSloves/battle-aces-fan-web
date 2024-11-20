@@ -3,10 +3,12 @@ import { Question } from '@/datacontracts/Question'
 import { Unit } from '@/datacontracts/Unit'
 import { AppLoaderFunction } from '@/lib/router'
 import { delayMs } from '@/utils/delayMs'
-import { Suspense } from 'react'
+import { Suspense, useState } from 'react'
 import { Await, useLoaderData } from 'react-router-dom'
 import { ErrorPage } from '../system/ErrorPage'
 import { QuestionList } from '@/components/questions/questionList'
+import { FinishedAnswering } from '@/components/home/finishedAnswering'
+import { HelpPopover } from '@/components/home/helpPopover'
 
 export type HomePageLoaderData = {
     questions: Promise<Question[]>
@@ -37,9 +39,15 @@ export const homeLoader: AppLoaderFunction<HomePageLoaderData> = async (_args, {
 export const HomePage = () => {
     const data = useLoaderData() as HomePageLoaderData
 
+    const [isFinished, setIsFinished] = useState(false)
+
     return (
-        <div className='h-full'>
-            <h1 className='text-center mb-8'>Rate these units and matchups!</h1>
+        <div className='h-full flex flex-col'>
+            <div className='flex mb-4'>
+                <h1 className='flex-grow text-center md:mb-8'>Rate these units and matchups!</h1>
+                <HelpPopover />
+            </div>
+
             <Suspense
                 fallback={
                     <div className='mt-8'>
@@ -47,7 +55,9 @@ export const HomePage = () => {
                     </div>
                 }>
                 <Await resolve={data.questions} errorElement={<ErrorPage />}>
-                    {(questions: Question[]) => <QuestionList questions={questions} />}
+                    {(questions: Question[]) =>
+                        isFinished ? <FinishedAnswering /> : <QuestionList questions={questions} setIsFinished={() => setIsFinished(true)} />
+                    }
                 </Await>
             </Suspense>
         </div>
