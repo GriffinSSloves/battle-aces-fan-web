@@ -1,6 +1,6 @@
 import { Question } from '@/datacontracts/Question'
 import { IHttpClient } from './HttpClient'
-import { getMockUnit } from './UnitClient'
+import { getMockUnit, getMockUnit2 } from './UnitClient'
 
 export interface IQuestionClient {
     getQuestions: () => Promise<Question[]>
@@ -25,7 +25,7 @@ export class QuestionClient implements IQuestionClient {
                 details: {
                     kind: 'unit_matchup',
                     friendlyUnits: [getMockUnit()],
-                    enemyUnits: [getMockUnit()]
+                    enemyUnits: [getMockUnit2()]
                 }
             }
         ]

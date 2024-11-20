@@ -21,6 +21,22 @@ export const getMockUnit = (): Unit => {
     }
 }
 
+export const getMockUnit2 = (): Unit => {
+    return {
+        ability: ['Blink'],
+        attacks: 'Ground',
+        category: 'Advanced Foundry',
+        name: 'Blink Hunter',
+        stats: {
+            bandwidth: 12,
+            energy: 5,
+            matter: 100
+        },
+        traits: ['Anti-Air'],
+        type: 'Ground'
+    }
+}
+
 export class UnitClient {
     route = '/units'
 

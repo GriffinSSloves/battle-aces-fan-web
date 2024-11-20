@@ -79,13 +79,13 @@ export const AnswerForm = ({ tags, onNext }: AnswerUnitSingleProps) => {
                                         {OTHER_TAG_KINDS.map((tag) => (
                                             <AnswerTag key={tag} tag={tag} currentValue={field.value} mood={'neutral'} onChange={field.onChange} />
                                         ))}
-                                    </div>
+                                    </div> */}
 
                                     <div className='flex gap-2'>
                                         {SAD_TAG_KINDS.map((tag) => (
                                             <AnswerTag key={tag} tag={tag} currentValue={field.value} mood={'angry'} onChange={field.onChange} />
                                         ))}
-                                    </div> */}
+                                    </div>
                                 </div>
                             </FormControl>
                             <FormMessage />

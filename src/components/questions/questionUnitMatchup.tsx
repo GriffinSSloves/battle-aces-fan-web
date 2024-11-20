@@ -7,7 +7,6 @@ export const QuestionUnitMatchup = ({ _details }: QuestionProps) => {
 
     return (
         <div className='flex flex-col'>
-            <h1>Rate this matchup!</h1>
             <div className='flex items-center'>
                 <>
                     {details.friendlyUnits.map((unit) => (
