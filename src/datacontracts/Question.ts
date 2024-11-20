@@ -1,4 +1,4 @@
-import { UnitName } from '@/datacontracts/Unit'
+import { Unit, UnitName } from '@/datacontracts/Unit'
 import { z } from 'zod'
 
 export const QUESTION_KINDS = ['unit_single', 'unit_matchup'] as const
@@ -17,14 +17,14 @@ export type QuestionTagKind = z.infer<typeof QuestionTagKind>
 
 export const UnitSingleQuestionDetails = z.object({
     kind: z.literal('unit_single'),
-    unitName: UnitName
+    unit: Unit
 })
 export type UnitSingleQuestionDetails = z.infer<typeof UnitSingleQuestionDetails>
 
 export const UnitMatchupQuestionDetails = z.object({
     kind: z.literal('unit_matchup'),
-    friendlyUnitNames: z.array(UnitName),
-    enemyUnitNames: z.array(UnitName)
+    friendlyUnits: z.array(Unit),
+    enemyUnits: z.array(Unit)
 })
 export type UnitMatchupQuestionDetails = z.infer<typeof UnitMatchupQuestionDetails>
 

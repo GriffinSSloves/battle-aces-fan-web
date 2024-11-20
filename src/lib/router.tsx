@@ -1,12 +1,14 @@
 import { AppLayout } from '@/layouts/AppLayout'
-import { HomePage } from '@/pages/content/HomePage'
+import { homeLoader, HomePage } from '@/pages/content/HomePage'
 import { ErrorPage } from '@/pages/system/ErrorPage'
 import { ActionFunctionArgs, createBrowserRouter, LoaderFunctionArgs, RouteObject, RouterProvider } from 'react-router-dom'
 import { useResources } from './ResourceContextProvider'
 import { Resources } from './resourceProvider'
+import { LoadingSpinner } from '@/components/common/LoadingSpinner'
+import { AppFooter } from '@/layouts/AppFooter'
+import { AppHeader } from '@/layouts/AppHeader'
 
 // TODO: Move to types file
-
 export interface RouteContext {
     resources: Resources
 }
@@ -25,6 +27,19 @@ export const routerConfig = {
     }
 }
 
+// Avoids a warning for no fallback element. Mirrors AppLayout
+const fallback = (
+    <div className='min-h-screen flex flex-col'>
+        <AppHeader />
+        <main className='flex-grow'>
+            <div className='container mx-auto max-w-6xl px-4 py-8'>
+                <LoadingSpinner />
+            </div>
+        </main>
+        <AppFooter />
+    </div>
+)
+
 export const createAppRoutes = (context: RouteContext) => {
     const { resources } = context
 
@@ -36,18 +51,12 @@ export const createAppRoutes = (context: RouteContext) => {
                 {
                     index: true,
                     element: <HomePage />,
-                    loader: async () => {
-                        const [questions, units] = await Promise.all([resources.questionClient.getQuestions(), resources.unitClient.getUnits()])
-
-                        return {
-                            questions,
-                            units
-                        }
-                    },
+                    loader: (args) => homeLoader(args, context),
                     errorElement: <ErrorPage />
                 }
             ],
-            errorElement: <ErrorPage />
+            errorElement: <ErrorPage />,
+            hydrateFallbackElement: fallback
         }
     ]
 

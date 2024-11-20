@@ -3,30 +3,31 @@
 @tailwind utilities;
 
 /* 
-Base color - Green 
+Background color - Black
+Base color - White
 Uses HSL color format, (Hue, Saturation, Lightness)
 */
 @layer base {
     :root {
         --background: 0 0% 100%;
-        --foreground: 142 71.4% 4.1%;
+        --foreground: 220 13% 15%;
         --card: 0 0% 100%;
-        --card-foreground: 142 71.4% 4.1%;
+        --card-foreground: 220 13% 15%;
         --popover: 0 0% 100%;
-        --popover-foreground: 142 71.4% 4.1%;
-        --primary: 142 76.2% 36.3%;
-        --primary-foreground: 355.7 100% 97.3%;
-        --secondary: 142 16% 92.8%;
-        --secondary-foreground: 142 54.8% 12.4%;
-        --muted: 142 16% 92.8%;
-        --muted-foreground: 142 23.8% 41.2%;
-        --accent: 142 16% 92.8%;
-        --accent-foreground: 142 54.8% 12.4%;
+        --popover-foreground: 220 13% 15%;
+        --primary: 220 13% 15%;
+        --primary-foreground: 220 13% 95%;
+        --secondary: 220 13% 91%;
+        --secondary-foreground: 220 13% 15%;
+        --muted: 220 13% 91%;
+        --muted-foreground: 220 13% 45%;
+        --accent: 220 13% 91%;
+        --accent-foreground: 220 13% 15%;
         --destructive: 0 84.2% 60.2%;
         --destructive-foreground: 0 0% 98%;
-        --border: 142 20% 90%;
-        --input: 142 20% 90%;
-        --ring: 142 76.2% 36.3%;
+        --border: 220 13% 85%;
+        --input: 220 13% 85%;
+        --ring: 220 13% 15%;
         --radius: 0.5rem;
         --chart-1: 12 76% 61%;
         --chart-2: 173 58% 39%;
@@ -36,25 +37,25 @@ Uses HSL color format, (Hue, Saturation, Lightness)
     }
 
     .dark {
-        --background: 142 64.7% 2.4%;
-        --foreground: 142 10% 97.5%;
-        --card: 142 64.7% 2.4%;
-        --card-foreground: 142 10% 97.5%;
-        --popover: 142 64.7% 2.4%;
-        --popover-foreground: 142 10% 97.5%;
-        --primary: 142 76.2% 36.3%;
-        --primary-foreground: 355.7 100% 97.3%;
-        --secondary: 142 16% 92.8%;
-        --secondary-foreground: 142 54.8% 12.4%;
-        --muted: 142 50% 15.7%;
-        --muted-foreground: 142 23.8% 41.2%;
-        --accent: 142 50% 15.7%;
-        --accent-foreground: 142 10% 97.5%;
+        --background: 220 13% 15%;
+        --foreground: 220 13% 91%;
+        --card: 220 13% 17%;
+        --card-foreground: 220 13% 91%;
+        --popover: 220 13% 15%;
+        --popover-foreground: 220 13% 91%;
+        --primary: 220 13% 91%;
+        --primary-foreground: 220 13% 15%;
+        --secondary: 220 13% 25%;
+        --secondary-foreground: 220 13% 91%;
+        --muted: 220 13% 25%;
+        --muted-foreground: 220 13% 70%;
+        --accent: 220 13% 25%;
+        --accent-foreground: 220 13% 91%;
         --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 142 50% 15.7%;
-        --input: 142 50% 15.7%;
-        --ring: 142 76.2% 36.3%;
+        --destructive-foreground: 0 0% 91%;
+        --border: 220 13% 25%;
+        --input: 220 13% 25%;
+        --ring: 220 13% 91%;
         --chart-1: 220 70% 50%;
         --chart-2: 160 60% 45%;
         --chart-3: 30 80% 55%;
@@ -64,10 +65,135 @@ Uses HSL color format, (Hue, Saturation, Lightness)
 }
 
 @layer base {
+    /* Base styles */
     * {
         @apply border-border;
     }
     body {
         @apply bg-background text-foreground;
+    }
+
+    /* Typography */
+    h1 {
+        @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl;
+    }
+
+    .h1Style {
+        @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl;
+    }
+
+    h2 {
+        @apply scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0;
+    }
+
+    .h2Style {
+        @apply scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0;
+    }
+
+    h3 {
+        @apply scroll-m-20 text-2xl font-semibold tracking-tight;
+    }
+
+    .h3Style {
+        @apply scroll-m-20 text-2xl font-semibold tracking-tight;
+    }
+
+    h4 {
+        @apply scroll-m-20 text-xl font-semibold tracking-tight;
+    }
+
+    .h4Style {
+        @apply scroll-m-20 text-xl font-semibold tracking-tight;
+    }
+
+    h5 {
+        @apply scroll-m-20 text-lg font-semibold tracking-tight;
+    }
+
+    .h5Style {
+        @apply scroll-m-20 text-lg font-semibold tracking-tight;
+    }
+
+    h6 {
+        @apply scroll-m-20 text-base font-semibold tracking-tight;
+    }
+
+    .h6Style {
+        @apply scroll-m-20 text-base font-semibold tracking-tight;
+    }
+
+    p {
+        @apply leading-7 [&:not(:first-child)]:mt-6;
+    }
+
+    ul {
+        @apply my-6 ml-6 list-disc [&>li]:mt-2;
+    }
+
+    ol {
+        @apply my-6 ml-6 list-decimal [&>li]:mt-2;
+    }
+}
+
+/* Rich text content styles */
+@layer components {
+    .prose {
+        @apply text-base leading-7;
+    }
+
+    .prose :where(h1) {
+        @apply mt-12 scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl;
+    }
+
+    .prose :where(h2) {
+        @apply mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0;
+    }
+
+    .prose :where(h3) {
+        @apply mt-8 scroll-m-20 text-2xl font-semibold tracking-tight;
+    }
+
+    .prose :where(h4) {
+        @apply mt-8 scroll-m-20 text-xl font-semibold tracking-tight;
+    }
+
+    .prose :where(p) {
+        @apply leading-7 [&:not(:first-child)]:mt-6;
+    }
+
+    .prose :where(blockquote) {
+        @apply mt-6 border-l-2 pl-6 italic;
+    }
+
+    .prose :where(ul) {
+        @apply my-6 ml-6 list-disc [&>li]:mt-2;
+    }
+
+    .prose :where(code) {
+        @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
+    }
+
+    .prose :where(pre) {
+        @apply mt-6 overflow-x-auto rounded-lg border bg-black py-4;
+    }
+
+    .prose :where(pre code) {
+        @apply relative rounded-none border-none bg-transparent p-0 text-white;
+    }
+
+    .prose :where(img) {
+        @apply rounded-lg border;
+    }
+
+    .prose :where(hr) {
+        @apply my-4 border-muted-foreground/20;
+    }
+
+    .prose :where(a) {
+        @apply font-medium underline underline-offset-4;
+    }
+
+    .prose :where(a:hover) {
+        @apply text-muted-foreground;
     }
 }

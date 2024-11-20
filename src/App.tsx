@@ -1,5 +1,4 @@
 import { RouterProvider } from 'react-router-dom'
-import './App.css'
 import './index.css'
 import { AppRouter } from './lib/router'
 import { ResourceContextProvider } from './lib/ResourceContextProvider'
