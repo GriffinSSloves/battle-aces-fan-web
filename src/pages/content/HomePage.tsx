@@ -2,7 +2,6 @@ import { LoadingSpinner } from '@/components/common/LoadingSpinner'
 import { Question } from '@/datacontracts/Question'
 import { Unit } from '@/datacontracts/Unit'
 import { AppLoaderFunction } from '@/lib/router'
-import { delayMs } from '@/utils/delayMs'
 import { Suspense, useState } from 'react'
 import { Await, useLoaderData } from 'react-router-dom'
 import { ErrorPage } from '../system/ErrorPage'
@@ -43,7 +42,7 @@ export const HomePage = () => {
 
     return (
         <div className='h-full flex flex-col'>
-            <div className='flex mb-4'>
+            <div className='flex mb-4 '>
                 <h1 className='flex-grow text-center md:mb-8'>Rate these units and matchups!</h1>
                 <HelpPopover />
             </div>

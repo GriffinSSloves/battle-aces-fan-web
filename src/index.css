@@ -94,102 +94,102 @@ body,
 
     /* Typography */
     h1 {
-        @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl;
+        @apply scroll-m-20 text-2xl md:text-4xl font-extrabold tracking-tight lg:text-5xl;
     }
 
     .h1Style {
-        @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl;
+        @apply scroll-m-20 text-2xl md:text-4xl font-extrabold tracking-tight lg:text-5xl;
     }
 
     h2 {
-        @apply scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0;
+        @apply scroll-m-20 text-xl md:text-3xl font-semibold tracking-tight first:mt-0;
     }
 
     .h2Style {
-        @apply scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0;
+        @apply scroll-m-20 text-xl md:text-3xl font-semibold tracking-tight first:mt-0;
     }
 
     h3 {
-        @apply scroll-m-20 text-2xl font-semibold tracking-tight;
+        @apply scroll-m-20 text-lg md:text-2xl font-semibold tracking-tight;
     }
 
     .h3Style {
-        @apply scroll-m-20 text-2xl font-semibold tracking-tight;
+        @apply scroll-m-20 text-lg md:text-2xl font-semibold tracking-tight;
     }
 
     h4 {
-        @apply scroll-m-20 text-xl font-semibold tracking-tight;
+        @apply scroll-m-20 text-base md:text-xl font-semibold tracking-tight;
     }
 
     .h4Style {
-        @apply scroll-m-20 text-xl font-semibold tracking-tight;
+        @apply scroll-m-20 text-base md:text-xl font-semibold tracking-tight;
     }
 
     h5 {
-        @apply scroll-m-20 text-lg font-semibold tracking-tight;
+        @apply scroll-m-20 text-sm md:text-lg font-semibold tracking-tight;
     }
 
     .h5Style {
-        @apply scroll-m-20 text-lg font-semibold tracking-tight;
+        @apply scroll-m-20 text-sm md:text-lg font-semibold tracking-tight;
     }
 
     h6 {
-        @apply scroll-m-20 text-base font-semibold tracking-tight;
+        @apply scroll-m-20 text-xs md:text-base font-semibold tracking-tight;
     }
 
     .h6Style {
-        @apply scroll-m-20 text-base font-semibold tracking-tight;
+        @apply scroll-m-20 text-xs md:text-base font-semibold tracking-tight;
     }
 
     p {
-        @apply leading-7 [&:not(:first-child)]:mt-6;
+        @apply text-sm md:text-base leading-6 md:leading-7 [&:not(:first-child)]:mt-4 md:[&:not(:first-child)]:mt-6;
     }
 
     ul {
-        @apply my-6 ml-6 list-disc [&>li]:mt-2;
+        @apply my-4 md:my-6 ml-4 md:ml-6 list-disc [&>li]:mt-1 md:[&>li]:mt-2;
     }
 
     ol {
-        @apply my-6 ml-6 list-decimal [&>li]:mt-2;
+        @apply my-4 md:my-6 ml-4 md:ml-6 list-decimal [&>li]:mt-1 md:[&>li]:mt-2;
     }
 }
 
 /* Rich text content styles */
 @layer components {
     .prose {
-        @apply text-base leading-7;
+        @apply text-sm md:text-base leading-6 md:leading-7;
     }
 
     .prose :where(h1) {
-        @apply mt-12 scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl;
+        @apply mt-8 md:mt-12 scroll-m-20 text-2xl md:text-4xl font-extrabold tracking-tight lg:text-5xl;
     }
 
     .prose :where(h2) {
-        @apply mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0;
+        @apply mt-6 md:mt-10 scroll-m-20 border-b pb-1 md:pb-2 text-xl md:text-3xl font-semibold tracking-tight first:mt-0;
     }
 
     .prose :where(h3) {
-        @apply mt-8 scroll-m-20 text-2xl font-semibold tracking-tight;
+        @apply mt-6 md:mt-8 scroll-m-20 text-lg md:text-2xl font-semibold tracking-tight;
     }
 
     .prose :where(h4) {
-        @apply mt-8 scroll-m-20 text-xl font-semibold tracking-tight;
+        @apply mt-6 md:mt-8 scroll-m-20 text-base md:text-xl font-semibold tracking-tight;
     }
 
     .prose :where(p) {
-        @apply leading-7 [&:not(:first-child)]:mt-6;
+        @apply text-sm md:text-base leading-6 md:leading-7 [&:not(:first-child)]:mt-4 md:[&:not(:first-child)]:mt-6;
     }
 
     .prose :where(blockquote) {
-        @apply mt-6 border-l-2 pl-6 italic;
+        @apply mt-4 md:mt-6 border-l-2 pl-4 md:pl-6 italic text-sm md:text-base;
     }
 
     .prose :where(ul) {
-        @apply my-6 ml-6 list-disc [&>li]:mt-2;
+        @apply my-4 md:my-6 ml-4 md:ml-6 list-disc [&>li]:mt-1 md:[&>li]:mt-2;
     }
 
     .prose :where(code) {
-        @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
+        @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-xs md:text-sm font-semibold;
     }
 
     .prose :where(pre) {

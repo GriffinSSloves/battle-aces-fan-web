@@ -110,7 +110,11 @@ export const AnswerForm = ({ question, tags, onNext }: AnswerUnitSingleProps) =>
                         size='lg'
                         type='submit'
                         disabled={!form.formState.isValid}
-                        className={cn('w-full h-12 md:w-64 md:h-16 text-xl md:text-2xl font-semibold text-gray-200', 'battle-aces-orange')}>
+                        className={cn(
+                            'w-full h-12 md:w-64 md:h-16 text-xl md:text-2xl font-semibold text-gray-200',
+                            'battle-aces-orange',
+                            'disabled:opacity-75'
+                        )}>
                         Next
                     </Button>
                 </div>
