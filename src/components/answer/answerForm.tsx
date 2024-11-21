@@ -1,4 +1,3 @@
-import { HAPPY_TAG_KINDS, OTHER_TAG_KINDS, Question, QuestionTagKind, SAD_TAG_KINDS } from '@/datacontracts/Question'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FieldErrors, useForm } from 'react-hook-form'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
@@ -7,17 +6,18 @@ import { z } from 'zod'
 import { AnswerButton } from './answerButton'
 import { AnswerTag } from './answerTag'
 import { cn } from '@/lib/utils'
+import { SurveyQuestion, SurveyQuestionSchema, SurveyQuestionTag } from '@battle-aces-fan/datacontracts'
 
 type AnswerUnitSingleProps = {
-    question: Question
-    tags: QuestionTagKind[]
+    question: SurveyQuestion
+    tags: SurveyQuestionTag[]
     onNext: () => void
 }
 
 const FormSchema = z.object({
-    question: Question,
+    question: SurveyQuestionSchema,
     rating: z.number(),
-    tags: z.array(QuestionTagKind)
+    tags: z.array(SurveyQuestionTag)
 })
 type FormSchema = z.infer<typeof FormSchema>
 
@@ -27,7 +27,7 @@ export const AnswerForm = ({ question, tags, onNext }: AnswerUnitSingleProps) =>
     const form = useForm<FormSchema>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            question: question,
+            question: question.data,
             tags: []
         }
     })
@@ -72,29 +72,8 @@ export const AnswerForm = ({ question, tags, onNext }: AnswerUnitSingleProps) =>
                             <FormItem>
                                 <FormControl>
                                     <div className='flex items-center justify-center gap-2 gap-y-4 flex-wrap max-w-[650px] mx-auto'>
-                                        {HAPPY_TAG_KINDS.map((tag) => (
+                                        {tags.map((tag) => (
                                             <AnswerTag key={tag} tag={tag} currentValue={field.value} mood={'happy'} onChange={field.onChange} />
-                                        ))}
-                                        {/* {HAPPY_TAG_KINDS.map((tag) => (
-                                            <AnswerTag key={tag} tag={tag} currentValue={field.value} mood={'happy'} onChange={field.onChange} />
-                                        ))}
-                                        {HAPPY_TAG_KINDS.map((tag) => (
-                                            <AnswerTag key={tag} tag={tag} currentValue={field.value} mood={'happy'} onChange={field.onChange} />
-                                        ))}
-                                        {HAPPY_TAG_KINDS.map((tag) => (
-                                            <AnswerTag key={tag} tag={tag} currentValue={field.value} mood={'happy'} onChange={field.onChange} />
-                                        ))}
-                                        {HAPPY_TAG_KINDS.map((tag) => (
-                                            <AnswerTag key={tag} tag={tag} currentValue={field.value} mood={'happy'} onChange={field.onChange} />
-                                        ))}
-                                        {HAPPY_TAG_KINDS.map((tag) => (
-                                            <AnswerTag key={tag} tag={tag} currentValue={field.value} mood={'happy'} onChange={field.onChange} />
-                                        ))} */}
-                                        {OTHER_TAG_KINDS.map((tag) => (
-                                            <AnswerTag key={tag} tag={tag} currentValue={field.value} mood={'neutral'} onChange={field.onChange} />
-                                        ))}
-                                        {SAD_TAG_KINDS.map((tag) => (
-                                            <AnswerTag key={tag} tag={tag} currentValue={field.value} mood={'angry'} onChange={field.onChange} />
                                         ))}
                                     </div>
                                 </FormControl>
@@ -105,7 +84,7 @@ export const AnswerForm = ({ question, tags, onNext }: AnswerUnitSingleProps) =>
                 </div>
 
                 {/* Fixed button container */}
-                <div className='static bottom-8 left-0 right-0 p-4'>
+                <div className='static bottom-4 left-0 right-0 p-4'>
                     <Button
                         size='lg'
                         type='submit'

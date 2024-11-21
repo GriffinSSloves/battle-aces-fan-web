@@ -1,14 +1,14 @@
 import { cn } from '@/lib/utils'
 import { Button } from '../ui/button'
-import { QuestionTagKind } from '@/datacontracts/Question'
+import { SurveyQuestionTag } from '@battle-aces-fan/datacontracts'
 
 export type TagMood = 'happy' | 'angry' | 'neutral'
 
 interface AnswerTagProps {
-    tag: QuestionTagKind
-    currentValue: QuestionTagKind[]
+    tag: SurveyQuestionTag
+    currentValue: SurveyQuestionTag[]
     mood: TagMood
-    onChange: (value: QuestionTagKind[]) => void
+    onChange: (value: SurveyQuestionTag[]) => void
 }
 
 export const AnswerTag = ({ tag, currentValue, mood, onChange }: AnswerTagProps) => {

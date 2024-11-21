@@ -1,21 +1,18 @@
 import { AnswerClient, IAnswerClient } from '@/clients/AnswerClient'
 import { IDBFileSystem, IFileSystem } from '@/clients/FileSystem'
-import { HttpClient, IHttpClient, UserHttpClient } from '@/clients/HttpClient'
 import { IQuestionClient, QuestionClient } from '@/clients/QuestionClient'
-import { ISessionDataClient, SessionDataFileClient } from '@/clients/SessionDataClient'
-import { IUnitClient, UnitClient } from '@/clients/UnitClient'
+import { IUserClient, UserClient } from '@/clients/UserClient'
+import { UserApiClient } from '@battle-aces-fan/user-clients'
 
 export interface UserResources {
-    userHttpClient: IHttpClient
+    questionClient: IQuestionClient
     answerClient: IAnswerClient
 }
 
 export interface Resources {
-    httpClient: IHttpClient
     fileSystem: IFileSystem
-    unitClient: IUnitClient
-    questionClient: IQuestionClient
-    sessionClient: ISessionDataClient
+    userApiClient: UserApiClient
+    userClient: IUserClient
     userResources: Promise<UserResources | null> // null means we failed to create the user resources
 }
 
@@ -30,41 +27,40 @@ export class ResourceProvider {
 
     static create(): IResourceProvider {
         const fileSystem = new IDBFileSystem()
-        const sessionClient = new SessionDataFileClient(fileSystem)
+        const userApiClient = UserApiClient({ url: 'http://localhost:8000' })
+        const userClient = new UserClient({ fileSystem, userApiClient })
 
-        const httpClient = new HttpClient()
-        const unitClient = new UnitClient(httpClient)
-        const questionClient = new QuestionClient(httpClient)
+        const getUserId = async () => {
+            const user = await userClient.getOrCreate()
 
-        const userResources = ResourceProvider.#createUserResources(async () => {
-            const session = await sessionClient.getOrCreate()
+            return user.id
+        }
 
-            return session.id
-        }).catch((error) => {
+        const userResources = ResourceProvider.#createUserResources(getUserId, userApiClient).catch((error) => {
             console.error('Failed to create user resources', error)
             return null
         })
 
         return new ResourceProvider({
-            unitClient,
-            questionClient,
-            sessionClient,
-            httpClient,
             fileSystem,
+            userApiClient,
+            userClient,
             userResources
         })
     }
 
     // Creates all of the resources asynchronously that are specific to the user
-    static #createUserResources = async (getUserId: GetUserId): Promise<UserResources> => {
+    static #createUserResources = async (getUserId: GetUserId, userApiClient: UserApiClient): Promise<UserResources> => {
         const userId = await getUserId()
 
-        const userHttpClient = new UserHttpClient(userId)
-        const answerClient = new AnswerClient(userHttpClient)
+        const questionClient = new QuestionClient(userApiClient, userId)
+        const answerClient = new AnswerClient(userApiClient, userId)
 
-        return {
-            userHttpClient,
-            answerClient
+        const userResources: UserResources = {
+            answerClient,
+            questionClient
         }
+
+        return userResources
     }
 }

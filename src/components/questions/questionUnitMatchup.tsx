@@ -1,16 +1,14 @@
-import { UnitMatchupQuestionDetails } from '@/datacontracts/Question'
 import { UnitDisplay } from '../units/unitDisplay'
 import { QuestionProps } from './questionMap'
+import { SurveyQuestion_UnitMatchupSchema } from '@battle-aces-fan/datacontracts'
 
 export const QuestionUnitMatchup = ({ _details }: QuestionProps) => {
-    const details: UnitMatchupQuestionDetails = UnitMatchupQuestionDetails.parse(_details)
+    const details: SurveyQuestion_UnitMatchupSchema = SurveyQuestion_UnitMatchupSchema.parse(_details)
 
     return (
         <div className='flex items-center w-full'>
             <div className='flex-1 flex justify-end gap-4 pr-4'>
-                {details.friendlyUnits.map((unit) => (
-                    <UnitDisplay key={unit.name} unit={unit} />
-                ))}
+                <UnitDisplay unitSlug={details.firstUnitSlug} />
             </div>
 
             <div className='flex-none'>
@@ -18,9 +16,7 @@ export const QuestionUnitMatchup = ({ _details }: QuestionProps) => {
             </div>
 
             <div className='flex-1 flex justify-start gap-4 pl-4'>
-                {details.enemyUnits.map((unit) => (
-                    <UnitDisplay key={unit.name} unit={unit} />
-                ))}
+                <UnitDisplay unitSlug={details.secondUnitSlug} />
             </div>
         </div>
     )

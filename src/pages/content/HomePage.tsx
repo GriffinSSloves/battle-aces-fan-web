@@ -1,6 +1,4 @@
 import { LoadingSpinner } from '@/components/common/LoadingSpinner'
-import { Question } from '@/datacontracts/Question'
-import { Unit } from '@/datacontracts/Unit'
 import { AppLoaderFunction } from '@/lib/router'
 import { Suspense, useState } from 'react'
 import { Await, useLoaderData } from 'react-router-dom'
@@ -8,30 +6,29 @@ import { ErrorPage } from '../system/ErrorPage'
 import { QuestionList } from '@/components/questions/questionList'
 import { FinishedAnswering } from '@/components/home/finishedAnswering'
 import { HelpPopover } from '@/components/home/helpPopover'
+import { Button } from '@/components/ui/button'
+import { UserApiClient } from '@battle-aces-fan/user-clients'
+import { SurveyQuestion } from '@battle-aces-fan/datacontracts'
 
 export type HomePageLoaderData = {
-    questions: Promise<Question[]>
-    units: Promise<Unit[]>
+    questions: Promise<SurveyQuestion[]>
 }
 
 export const homeLoader: AppLoaderFunction<HomePageLoaderData> = async (_args, { resources }) => {
     const getQuestions = async () => {
         console.log('starting loading questions')
+        const userResources = await resources.userResources
+        if (!userResources) {
+            throw new Error('Failed to load user resources')
+        }
+
+        const questions = await userResources.questionClient.getQuestions()
         console.log('finished loading questions')
-        return resources.questionClient.getQuestions()
+        return questions
     }
 
-    try {
-        const questions = getQuestions()
-        const units = resources.unitClient.getUnits()
-
-        return {
-            questions,
-            units
-        }
-    } catch (error) {
-        console.error('Error loading home page', error)
-        throw error
+    return {
+        questions: getQuestions()
     }
 }
 
@@ -54,7 +51,7 @@ export const HomePage = () => {
                     </div>
                 }>
                 <Await resolve={data.questions} errorElement={<ErrorPage />}>
-                    {(questions: Question[]) =>
+                    {(questions: SurveyQuestion[]) =>
                         isFinished ? <FinishedAnswering /> : <QuestionList questions={questions} setIsFinished={() => setIsFinished(true)} />
                     }
                 </Await>

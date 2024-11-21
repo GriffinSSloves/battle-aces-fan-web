@@ -1,33 +1,25 @@
-import { Question } from '@/datacontracts/Question'
-import { IHttpClient } from './HttpClient'
-import { getMockUnit, getMockUnit2 } from './UnitClient'
+import { SurveyQuestion } from '@battle-aces-fan/datacontracts'
+import { UserApiClient } from '@battle-aces-fan/user-clients'
 
 export interface IQuestionClient {
-    getQuestions: () => Promise<Question[]>
+    getQuestions: () => Promise<SurveyQuestion[]>
 }
 
 export class QuestionClient implements IQuestionClient {
     route = '/questions'
 
-    constructor(private readonly httpClient: IHttpClient) {}
+    constructor(
+        private readonly userApiClient: UserApiClient,
+        private readonly userId: string
+    ) {}
 
-    getQuestions = async (): Promise<Question[]> => {
-        return [
-            {
-                kind: 'unit_single',
-                details: {
-                    kind: 'unit_single',
-                    unit: getMockUnit()
-                }
-            },
-            {
-                kind: 'unit_matchup',
-                details: {
-                    kind: 'unit_matchup',
-                    friendlyUnits: [getMockUnit()],
-                    enemyUnits: [getMockUnit2()]
-                }
-            }
-        ]
+    getQuestions = async (): Promise<SurveyQuestion[]> => {
+        const response = await this.userApiClient.users.questions[':userId'].$get({
+            param: { userId: this.userId }
+        })
+
+        const questions = await response.json()
+
+        return questions.questions.map((question) => new SurveyQuestion(question))
     }
 }

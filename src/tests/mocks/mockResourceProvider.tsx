@@ -1,16 +1,10 @@
-import { HttpRequestOptions } from '@/clients/HttpClient'
-import { SessionData } from '@/datacontracts/Session'
 import { IResourceProvider } from '@/lib/resourceProvider'
+import { User } from '@battle-aces-fan/datacontracts'
 
 // TODO: Implement these
 export const mockResourceProvider: IResourceProvider = {
     resources: {
-        questionClient: {
-            getQuestions: async () => []
-        },
-        unitClient: {
-            getUnits: async () => []
-        },
+        userApiClient: '' as any,
         fileSystem: {
             readFile: function (path: string): Promise<string> {
                 throw new Error('Function not implemented.')
@@ -25,16 +19,8 @@ export const mockResourceProvider: IResourceProvider = {
                 throw new Error('Function not implemented.')
             }
         },
-        httpClient: {
-            get: function (url: string, options?: HttpRequestOptions): Promise<string> {
-                throw new Error('Function not implemented.')
-            },
-            post: function (url: string, body: unknown, options?: HttpRequestOptions): Promise<string> {
-                throw new Error('Function not implemented.')
-            }
-        },
-        sessionClient: {
-            getOrCreate: function (): Promise<SessionData> {
+        userClient: {
+            getOrCreate: function (): Promise<User> {
                 throw new Error('Function not implemented.')
             }
         },
