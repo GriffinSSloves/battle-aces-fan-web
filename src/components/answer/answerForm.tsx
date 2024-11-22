@@ -6,7 +6,8 @@ import { z } from 'zod'
 import { AnswerButton } from './answerButton'
 import { AnswerTag } from './answerTag'
 import { cn } from '@/lib/utils'
-import { SurveyQuestion, SurveyQuestionSchema, SurveyQuestionTag } from '@battle-aces-fan/datacontracts'
+import { SmileyFaceRating, SurveyQuestion, SurveyQuestionResponseDetails, SurveyQuestionTag } from '@battle-aces-fan/datacontracts'
+import { useUserResources } from '@/lib/ResourceContextProvider'
 
 type AnswerUnitSingleProps = {
     question: SurveyQuestion
@@ -14,31 +15,50 @@ type AnswerUnitSingleProps = {
     onNext: () => void
 }
 
-const FormSchema = z.object({
-    question: SurveyQuestionSchema,
-    rating: z.number(),
-    tags: z.array(SurveyQuestionTag)
+// use version from data contracts
+export const UserSubmitResponseSchema = z.object({
+    details: SurveyQuestionResponseDetails.omit({
+        userId: true
+    })
 })
-type FormSchema = z.infer<typeof FormSchema>
+export type UserSubmitResponseSchema = z.infer<typeof UserSubmitResponseSchema>
 
-const ratingOptions = [1, 2, 3, 4, 5]
+const ratingOptions: SmileyFaceRating[] = ['veryUnhappy', 'unhappy', 'neutral', 'happy', 'veryHappy']
 
 export const AnswerForm = ({ question, tags, onNext }: AnswerUnitSingleProps) => {
-    const form = useForm<FormSchema>({
-        resolver: zodResolver(FormSchema),
+    const form = useForm<UserSubmitResponseSchema>({
+        resolver: zodResolver(UserSubmitResponseSchema),
         defaultValues: {
-            question: question.data,
-            tags: []
+            details: {
+                questionId: question.id,
+                questionKind: question.kind,
+                tags: [],
+                skipped: false
+            }
         }
     })
 
-    const handleSubmit = (values: FormSchema) => {
-        console.log('submit', values)
-        form.reset()
+    const userResources = useUserResources()
+
+    const handleSubmit = async (values: UserSubmitResponseSchema) => {
+        if (!userResources.userResources) {
+            console.error('user resources not loaded')
+            return
+        }
+
+        try {
+            await userResources.userResources.answerClient.postAnswer({
+                details: values.details
+            })
+        } catch (error) {
+            console.error('error posting answer', error)
+        }
+
         onNext()
+        form.reset()
     }
 
-    const onValidationFailed = (errors: FieldErrors<FormSchema>) => {
+    const onValidationFailed = (errors: FieldErrors<UserSubmitResponseSchema>) => {
         console.log('validation failed', errors)
     }
 
@@ -49,7 +69,7 @@ export const AnswerForm = ({ question, tags, onNext }: AnswerUnitSingleProps) =>
                 <div className='flex-grow space-y-8'>
                     <FormField
                         control={form.control}
-                        name='rating'
+                        name='details.smileyFaceRating'
                         render={({ field }) => {
                             return (
                                 <FormItem>
@@ -67,7 +87,7 @@ export const AnswerForm = ({ question, tags, onNext }: AnswerUnitSingleProps) =>
 
                     <FormField
                         control={form.control}
-                        name='tags'
+                        name='details.tags'
                         render={({ field }) => (
                             <FormItem>
                                 <FormControl>
@@ -88,7 +108,7 @@ export const AnswerForm = ({ question, tags, onNext }: AnswerUnitSingleProps) =>
                     <Button
                         size='lg'
                         type='submit'
-                        disabled={!form.formState.isValid}
+                        disabled={!form.formState.isValid || userResources.isLoading}
                         className={cn(
                             'w-full h-12 md:w-64 md:h-16 text-xl md:text-2xl font-semibold text-gray-200',
                             'battle-aces-orange',

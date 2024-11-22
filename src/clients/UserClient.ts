@@ -40,8 +40,6 @@ export class UserClient implements IUserClient {
             }
         }
 
-        console.log('userId:', userId)
-
         const response = await this.params.userApiClient.users['find-or-create'].$post({
             json: {
                 userId
@@ -54,7 +52,6 @@ export class UserClient implements IUserClient {
             userId: user.user._id
         }
         await this.params.fileSystem.writeFile(this.fileName, JSON.stringify(userFileContents, null, 2))
-        console.log('wrote to file', userFileContents)
 
         return new User(user.user)
     }

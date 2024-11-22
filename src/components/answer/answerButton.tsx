@@ -1,19 +1,20 @@
 import { Angry, Frown, Meh, Smile, Laugh } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { SmileyFaceRating } from '@battle-aces-fan/datacontracts'
 
 // Map moods to colors
-export const getMoodStyles = (rating: number) => {
+export const getMoodStyles = (rating: SmileyFaceRating) => {
     switch (rating) {
-        case 1: // Angry - red
+        case 'veryUnhappy': // Angry - red
             return 'bg-red-500 hover:bg-red-600 text-white'
-        case 2: // Frown - orange
+        case 'unhappy': // Frown - orange
             return 'bg-orange-500 hover:bg-orange-600 text-white'
-        case 3: // Meh - yellow
+        case 'neutral': // Meh - yellow
             return 'bg-yellow-500 hover:bg-yellow-600 text-white'
-        case 4: // Smile - green
+        case 'happy': // Smile - green
             return 'bg-lime-500 hover:bg-lime-600 text-white'
-        case 5: // Laugh - emerald
+        case 'veryHappy': // Laugh - emerald
             return 'bg-emerald-500 hover:bg-emerald-600 text-white'
         default:
             return ''
@@ -21,9 +22,9 @@ export const getMoodStyles = (rating: number) => {
 }
 
 interface AnswerButtonProps {
-    rating: number
-    currentValue: number
-    onChange: (value: number) => void
+    rating: SmileyFaceRating
+    currentValue: SmileyFaceRating | null
+    onChange: (value: SmileyFaceRating) => void
 }
 
 export const AnswerButton = ({ rating, currentValue, onChange }: AnswerButtonProps) => {
@@ -36,22 +37,22 @@ export const AnswerButton = ({ rating, currentValue, onChange }: AnswerButtonPro
         }
 
         switch (rating) {
-            case 1:
+            case 'veryUnhappy':
                 return <Angry {...iconProps} />
-            case 2:
+            case 'unhappy':
                 return <Frown {...iconProps} />
-            case 3:
+            case 'neutral':
                 return <Meh {...iconProps} />
-            case 4:
+            case 'happy':
                 return <Smile {...iconProps} />
-            case 5:
+            case 'veryHappy':
                 return <Laugh {...iconProps} />
             default:
                 return null
         }
     }
 
-    const getMoodStylesForButton = (rating: number, enabled: boolean) => {
+    const getMoodStylesForButton = (rating: SmileyFaceRating, enabled: boolean) => {
         if (!enabled) {
             return ''
         }

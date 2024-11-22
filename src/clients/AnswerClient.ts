@@ -1,8 +1,10 @@
+import { SurveyQuestionResponseSchema } from '@battle-aces-fan/datacontracts'
 import { IHttpClient } from './HttpClient'
 import { UserApiClient } from '@battle-aces-fan/user-clients'
+import { UserSubmitResponseSchema } from '@/components/answer/answerForm'
 
 export interface IAnswerClient {
-    submitAnswer: (answer: string) => Promise<void>
+    postAnswer: (questionResponse: UserSubmitResponseSchema) => Promise<boolean>
 }
 
 export class AnswerClient implements IAnswerClient {
@@ -11,7 +13,18 @@ export class AnswerClient implements IAnswerClient {
         private readonly userId: string
     ) {}
 
-    submitAnswer = async (answer: string): Promise<void> => {
-        console.log(`Submitting answer: ${answer}`)
+    postAnswer = async (questionResponse: UserSubmitResponseSchema): Promise<boolean> => {
+        const response = await this.userApiClient.users.responses[':userId'].$post({
+            param: { userId: this.userId },
+            json: questionResponse
+        })
+
+        if (!response.ok) {
+            return false
+        }
+
+        const json = await response.json()
+
+        return json.success
     }
 }

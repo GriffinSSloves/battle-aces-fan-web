@@ -6,8 +6,6 @@ import { ErrorPage } from '../system/ErrorPage'
 import { QuestionList } from '@/components/questions/questionList'
 import { FinishedAnswering } from '@/components/home/finishedAnswering'
 import { HelpPopover } from '@/components/home/helpPopover'
-import { Button } from '@/components/ui/button'
-import { UserApiClient } from '@battle-aces-fan/user-clients'
 import { SurveyQuestion } from '@battle-aces-fan/datacontracts'
 
 export type HomePageLoaderData = {
@@ -16,14 +14,12 @@ export type HomePageLoaderData = {
 
 export const homeLoader: AppLoaderFunction<HomePageLoaderData> = async (_args, { resources }) => {
     const getQuestions = async () => {
-        console.log('starting loading questions')
         const userResources = await resources.userResources
         if (!userResources) {
             throw new Error('Failed to load user resources')
         }
 
         const questions = await userResources.questionClient.getQuestions()
-        console.log('finished loading questions')
         return questions
     }
 

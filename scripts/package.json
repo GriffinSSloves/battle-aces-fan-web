@@ -1,0 +1,23 @@
+{
+    "name": "battle-aces-fan-web-scripts",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "watch": "tsc -w",
+        "build": "tsc"
+    },
+    "dependencies": {
+        "chalk": "4.1.2",
+        "commander": "^12.1.0",
+        "semver": "^7.6.2",
+        "zod": "^3.23.8"
+    },
+    "devDependencies": {
+        "@types/node": "^20.14.2",
+        "@types/semver": "^7.5.8",
+        "dotenv": "^16.4.5",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.2.2"
+    }
+}
