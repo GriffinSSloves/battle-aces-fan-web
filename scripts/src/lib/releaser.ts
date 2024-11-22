@@ -166,6 +166,34 @@ const runBuild = (): Promise<void> => {
     })
 }
 
+// Add this to your releaser object
+const testBuild = async () => {
+    logInfo('Running test build...')
+
+    await runBuild()
+
+    logInfo('Creating test docker image tag')
+    const testTag = 'battle-aces-web:test'
+
+    const buildCommand = `docker build -t ${testTag} .`
+    logInfo('Building docker image with command:', buildCommand)
+
+    logInfo('Building docker image...')
+    await streamExec(buildCommand)
+
+    logInfo(
+        chalk.green(`
+            Test build complete! You can:
+            1. Run the container: docker run -p 8080:80 ${testTag}
+            2. View the container: docker ps
+            3. Stop the container: docker stop <container-id>
+            4. Remove the image when done: docker rmi ${testTag}
+        `)
+    )
+
+    return testTag
+}
+
 const logInfo = (message: string, objects: any = null) => {
     if (objects) {
         // console.log(chalk.green(message), objects);
@@ -216,6 +244,7 @@ export const releaser = {
         }
     },
     basicBuild,
+    testBuild,
     docker,
     deployToCloudRun,
     getRootDir: envProvider.getRootDir,

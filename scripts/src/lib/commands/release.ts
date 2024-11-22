@@ -26,3 +26,19 @@ export const releaseCommand = new Command()
 
         process.exit(0)
     })
+
+export const testBuildCommand = new Command()
+    .command('test-build')
+    .description(`Test the docker build without releasing`)
+    .action(async () => {
+        const config = releaser.releaseConfig
+        console.log(chalk.blueBright(`Current release config: ${JSON.stringify(config, null, 2)} \n`))
+
+        console.log(chalk.green('Starting test release...'))
+
+        await releaser.testBuild()
+
+        console.log(chalk.green('Release complete!'))
+
+        process.exit(0)
+    })
