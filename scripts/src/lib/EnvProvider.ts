@@ -34,8 +34,10 @@ const getRootDir = () => {
 const getEnv = () => {
     const envObj = loadEnv() as any
     const gcloudServiceName: string = envObj.GCLOUD_SERVICE_NAME
+    const artifactRegistry: string = envObj.ARTIFACT_REGISTRY
     return {
-        gcloudServiceName
+        gcloudServiceName,
+        artifactRegistry
     }
 }
 
@@ -45,7 +47,7 @@ export const envProvider = {
     getRootDir,
     get constants() {
         const constants = {
-            artifactRegistry: 'us-west2-docker.pkg.dev/foxtail-362109/foxtail-web',
+            artifactRegistry: getEnv().artifactRegistry,
             gcloudServiceName: getEnv().gcloudServiceName
         } as const
         return constants
