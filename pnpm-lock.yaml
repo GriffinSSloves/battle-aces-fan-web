@@ -14,9 +14,6 @@ importers:
       '@battle-aces-fan/user-clients':
         specifier: ^0.2.38
         version: 0.2.38
-      '@battles-aces-fan/datacontracts':
-        specifier: ^0.1.0
-        version: 0.1.0
       '@hookform/resolvers':
         specifier: ^3.9.1
         version: 3.9.1(react-hook-form@7.53.2(react@18.3.1))
@@ -201,9 +198,6 @@ packages:
 
   '@battle-aces-fan/user-clients@0.2.38':
     resolution: {integrity: sha512-Qy7PEoq5EwlcnVWtGhF7nVeetyMIO2v+8u91payd/QO8/WlTCow3qRaiDMx873707Qdlmmu5BxQtEvsVei80/Q==}
-
-  '@battles-aces-fan/datacontracts@0.1.0':
-    resolution: {integrity: sha512-2E+zOYx+ev0pqrJ5SSPSUY5KTs2AHPq4Qp5/VoUoB4L6DCK5pGkRCdEcSR+TnNHzXqOLflGjOcPzGUoD6dXjyg==}
 
   '@deno/shim-deno-test@0.5.0':
     resolution: {integrity: sha512-4nMhecpGlPi0cSzT67L+Tm+GOJqvuk8gqHBziqcUQOarnuIax1z96/gJHCSIz2Z0zhxE6Rzwb3IZXPtFh51j+w==}
@@ -2859,8 +2853,6 @@ snapshots:
       - mongodb-client-encryption
       - snappy
       - socks
-
-  '@battles-aces-fan/datacontracts@0.1.0': {}
 
   '@deno/shim-deno-test@0.5.0': {}
 
