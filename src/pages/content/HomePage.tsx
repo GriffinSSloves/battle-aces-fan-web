@@ -20,7 +20,10 @@ export const homeLoader: AppLoaderFunction<HomePageLoaderData> = async (_args, {
         }
 
         const questions = await userResources.questionClient.getQuestions()
-        return questions
+
+        // TODO: Move this later, this shouldn't be here
+        const shuffledQuestions = questions.sort(() => Math.random() - 0.5)
+        return shuffledQuestions
     }
 
     return {
