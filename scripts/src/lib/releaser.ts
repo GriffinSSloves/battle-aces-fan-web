@@ -96,8 +96,7 @@ const deployToCloudRun = async (imageUri: string) => {
     const command = `gcloud run deploy ${envProvider.constants.gcloudServiceName} --image ${imageUri} --region us-west2`
     console.log('command that would be run: ', command)
 
-    // const result = await streamExec(command)
-    const result = ''
+    const result = await streamExec(command)
 
     return result
 }
