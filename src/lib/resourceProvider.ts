@@ -3,6 +3,7 @@ import { IDBFileSystem, IFileSystem } from '@/clients/FileSystem'
 import { IQuestionClient, QuestionClient } from '@/clients/QuestionClient'
 import { IUserClient, UserClient } from '@/clients/UserClient'
 import { UserApiClient } from '@battle-aces-fan/user-clients'
+import { AceConfig } from './env'
 
 export interface UserResources {
     questionClient: IQuestionClient
@@ -27,7 +28,7 @@ export class ResourceProvider {
 
     static create(): IResourceProvider {
         const fileSystem = new IDBFileSystem()
-        const userApiClient = UserApiClient({ url: 'http://localhost:8000' })
+        const userApiClient = UserApiClient({ url: AceConfig.apiUrl })
         const userClient = new UserClient({ fileSystem, userApiClient })
 
         const getUserId = async () => {
