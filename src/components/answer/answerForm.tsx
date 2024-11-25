@@ -8,7 +8,7 @@ import { AnswerTag } from './answerTag'
 import { cn } from '@/lib/utils'
 import { SmileyFaceRating, SurveyQuestion, SurveyQuestionResponseDetails, SurveyQuestionTag } from '@battle-aces-fan/datacontracts'
 import { useUserResources } from '@/lib/ResourceContextProvider'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useTagMoodMapContext } from '@/lib/TagMoodMapContextProvider'
 
 type AnswerUnitSingleProps = {
@@ -55,6 +55,20 @@ export const AnswerForm = ({ question, tags, onNext }: AnswerUnitSingleProps) =>
 
         return () => subscription.unsubscribe()
     }, [form])
+
+    // Move to its own function with tests
+    const sortedTags = useMemo(() => {
+        return tags.sort((a, b) => {
+            const aMood = tagMoodMap[a] ?? 'neutral'
+            const bMood = tagMoodMap[b] ?? 'neutral'
+
+            const moodOrder = ['happy', 'neutral', 'angry']
+            const aMoodIndex = moodOrder.indexOf(aMood)
+            const bMoodIndex = moodOrder.indexOf(bMood)
+
+            return aMoodIndex - bMoodIndex
+        })
+    }, [tags])
 
     const handleSubmit = async (values: UserSubmitResponseSchema) => {
         if (!userResources.userResources) {
@@ -108,7 +122,7 @@ export const AnswerForm = ({ question, tags, onNext }: AnswerUnitSingleProps) =>
                             <FormItem>
                                 <FormControl>
                                     <div className='flex items-center justify-center gap-2 gap-y-4 flex-wrap max-w-[650px] mx-auto'>
-                                        {tags.map((tag) => (
+                                        {sortedTags.map((tag) => (
                                             <AnswerTag
                                                 key={tag}
                                                 tag={tag}

@@ -1,5 +1,5 @@
 const getEnvVariable = (key: string): string => {
-    const value = import.meta.env[key] || process.env[key]
+    const value = import.meta.env[key]
 
     if (!value) {
         throw new Error(`Environment variable ${key} is not defined`)
@@ -9,5 +9,5 @@ const getEnvVariable = (key: string): string => {
 }
 
 export const AceConfig = {
-    apiUrl: getEnvVariable('BACKEND_URL')
+    apiUrl: getEnvVariable('VITE_BACKEND_URL')
 }

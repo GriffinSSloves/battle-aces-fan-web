@@ -17,11 +17,9 @@ export const AnswerTag = ({ tag, currentValue, mood, onChange }: AnswerTagProps)
         onChange(newTags)
     }
 
-    const rating = mood === 'happy' ? 5 : mood === 'neutral' ? 3 : 1
-
     const enabled = currentValue.includes(tag)
 
-    const baseStyles = 'px-3 py-1 rounded-full  text-xs md:text-sm font-medium transition-all duration-200 cursor-pointer border'
+    const baseStyles = 'px-3 py-1 rounded-full text-xs md:text-sm font-medium transition-all duration-200 cursor-pointer border'
 
     const typeStyles: Record<TagMood, { default: string; selected: string }> = {
         happy: {
