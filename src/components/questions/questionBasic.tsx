@@ -13,7 +13,7 @@ export const QuestionBasic = ({ _details }: QuestionProps) => {
             <h3 className='text-center'>{details.text}</h3>
 
             <div className='flex items-center w-full'>
-                <div className='flex-1 flex justify-end gap-4 pr-4'>
+                <div className='flex-1 flex justify-center gap-4 pr-4'>
                     {friendlyUnits && friendlyUnits.map((unit) => <UnitDisplay key={unit} unitSlug={unit} />)}
                 </div>
 

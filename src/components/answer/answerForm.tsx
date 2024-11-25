@@ -8,6 +8,8 @@ import { AnswerTag } from './answerTag'
 import { cn } from '@/lib/utils'
 import { SmileyFaceRating, SurveyQuestion, SurveyQuestionResponseDetails, SurveyQuestionTag } from '@battle-aces-fan/datacontracts'
 import { useUserResources } from '@/lib/ResourceContextProvider'
+import { useEffect } from 'react'
+import { useTagMoodMapContext } from '@/lib/TagMoodMapContextProvider'
 
 type AnswerUnitSingleProps = {
     question: SurveyQuestion
@@ -32,13 +34,27 @@ export const AnswerForm = ({ question, tags, onNext }: AnswerUnitSingleProps) =>
             details: {
                 questionId: question.id,
                 questionKind: question.kind,
+                smileyFaceRating: null,
                 tags: [],
-                skipped: false
+                skipped: true
             }
         }
     })
 
     const userResources = useUserResources()
+    const tagMoodMap = useTagMoodMapContext()
+
+    useEffect(() => {
+        const subscription = form.watch((value, { name }) => {
+            if (name?.startsWith('details.smileyFaceRating') || name?.startsWith('details.tags')) {
+                const hasRating = !!value.details?.smileyFaceRating
+                const hasTags = (value.details?.tags?.length ?? 0) > 0
+                form.setValue('details.skipped', !(hasRating || hasTags))
+            }
+        })
+
+        return () => subscription.unsubscribe()
+    }, [form])
 
     const handleSubmit = async (values: UserSubmitResponseSchema) => {
         if (!userResources.userResources) {
@@ -93,7 +109,13 @@ export const AnswerForm = ({ question, tags, onNext }: AnswerUnitSingleProps) =>
                                 <FormControl>
                                     <div className='flex items-center justify-center gap-2 gap-y-4 flex-wrap max-w-[650px] mx-auto'>
                                         {tags.map((tag) => (
-                                            <AnswerTag key={tag} tag={tag} currentValue={field.value} mood={'happy'} onChange={field.onChange} />
+                                            <AnswerTag
+                                                key={tag}
+                                                tag={tag}
+                                                currentValue={field.value}
+                                                mood={tagMoodMap[tag] ?? 'neutral'}
+                                                onChange={field.onChange}
+                                            />
                                         ))}
                                     </div>
                                 </FormControl>

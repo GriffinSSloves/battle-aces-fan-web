@@ -5,11 +5,15 @@ import { Await, useLoaderData } from 'react-router-dom'
 import { ErrorPage } from '../system/ErrorPage'
 import { QuestionList } from '@/components/questions/questionList'
 import { FinishedAnswering } from '@/components/home/finishedAnswering'
-import { HelpPopover } from '@/components/home/helpPopover'
-import { SurveyQuestion } from '@battle-aces-fan/datacontracts'
+import { SurveyQuestion, TagMoodMap, UnitSchema } from '@battle-aces-fan/datacontracts'
+import { TagMoodMapProvider } from '@/lib/TagMoodMapContextProvider'
+import { UnitsProvider } from '@/lib/UnitContextProvider'
+import { HelpHoverCard } from '@/components/home/helpHoverCard'
 
 export type HomePageLoaderData = {
     questions: Promise<SurveyQuestion[]>
+    moodMap: Promise<TagMoodMap>
+    units: Promise<UnitSchema[]>
 }
 
 export const homeLoader: AppLoaderFunction<HomePageLoaderData> = async (_args, { resources }) => {
@@ -26,8 +30,22 @@ export const homeLoader: AppLoaderFunction<HomePageLoaderData> = async (_args, {
         return shuffledQuestions
     }
 
+    const getMoodMap = async () => {
+        const response = await resources.userApiClient.tags['mood-map'].$get()
+        const json = await response.json()
+        return json.map
+    }
+
+    const getUnits = async () => {
+        const response = await resources.userApiClient.units.$get()
+        const json = await response.json()
+        return json.units
+    }
+
     return {
-        questions: getQuestions()
+        questions: getQuestions(),
+        moodMap: getMoodMap(),
+        units: getUnits()
     }
 }
 
@@ -39,8 +57,9 @@ export const HomePage = () => {
     return (
         <div className='h-full flex flex-col'>
             <div className='flex mb-4 '>
+                <div className='w-12' />
                 <h1 className='flex-grow text-center md:mb-8'>Rate these units and matchups!</h1>
-                <HelpPopover />
+                <HelpHoverCard />
             </div>
 
             <Suspense
@@ -49,9 +68,17 @@ export const HomePage = () => {
                         <LoadingSpinner />
                     </div>
                 }>
-                <Await resolve={data.questions} errorElement={<ErrorPage />}>
-                    {(questions: SurveyQuestion[]) =>
-                        isFinished ? <FinishedAnswering /> : <QuestionList questions={questions} setIsFinished={() => setIsFinished(true)} />
+                <Await resolve={Promise.all([data.questions, data.moodMap, data.units])} errorElement={<ErrorPage />}>
+                    {([questions, moodMap, units]: [SurveyQuestion[], TagMoodMap, UnitSchema[]]) =>
+                        isFinished ? (
+                            <FinishedAnswering />
+                        ) : (
+                            <UnitsProvider units={units}>
+                                <TagMoodMapProvider moodMap={moodMap}>
+                                    <QuestionList questions={questions} setIsFinished={() => setIsFinished(true)} />
+                                </TagMoodMapProvider>
+                            </UnitsProvider>
+                        )
                     }
                 </Await>
             </Suspense>

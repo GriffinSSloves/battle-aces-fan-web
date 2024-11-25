@@ -27,7 +27,7 @@ export class ResourceProvider {
 
     static create(): IResourceProvider {
         const fileSystem = new IDBFileSystem()
-        const userApiClient = UserApiClient({ url: 'http://localhost:8080' })
+        const userApiClient = UserApiClient({ url: 'http://localhost:8000' })
         const userClient = new UserClient({ fileSystem, userApiClient })
 
         const getUserId = async () => {
