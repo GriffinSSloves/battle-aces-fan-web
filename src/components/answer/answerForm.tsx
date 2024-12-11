@@ -32,14 +32,25 @@ export const AnswerForm = ({ question, tags, onNext }: AnswerUnitSingleProps) =>
         resolver: zodResolver(UserSubmitResponseSchema),
         defaultValues: {
             details: {
-                questionId: question.id,
-                questionKind: question.kind,
                 smileyFaceRating: null,
                 tags: [],
                 skipped: true
             }
         }
     })
+
+    useEffect(() => {
+        form.reset({
+            details: {
+                ...form.getValues().details,
+                questionId: question.id,
+                questionKind: question.kind,
+                smileyFaceRating: null,
+                tags: [],
+                skipped: true
+            }
+        })
+    }, [question, form])
 
     const userResources = useUserResources()
     const tagMoodMap = useTagMoodMapContext()
@@ -85,7 +96,6 @@ export const AnswerForm = ({ question, tags, onNext }: AnswerUnitSingleProps) =>
         }
 
         onNext()
-        form.reset()
     }
 
     const onValidationFailed = (errors: FieldErrors<UserSubmitResponseSchema>) => {
